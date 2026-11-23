@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Structura ierarhică a speciilor de micromicete</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 24px;
+            background-color: #f8fafc;
+            color: #1e293b;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06);
+            padding: 24px;
+            width: 100%;
+            max-width: 900px;
+        }
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .subtitle {
+            margin: 4px 0 0;
+            font-size: 13px;
+            color: #64748b;
+        }
+        .badge {
+            background: #eff6ff;
+            color: #0369a1;
+            border: 1px solid #bae6fd;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 999px;
+        }
+        #chart {
+            width: 100%;
+            height: 760px;
+        }
+        @media (max-width: 640px) {
+            body {
+                padding: 12px;
+            }
+            .card {
+                padding: 14px;
+            }
+            #chart {
+                height: 520px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="header">
+            <div>
+                <h1 class="title">Structura ierarhică a speciilor de micromicete</h1>
+                <p class="subtitle">Faceți clic pe o încrengătură sau pe un gen pentru a mări; faceți clic în centru pentru a reveni</p>
+            </div>
+            <span class="badge">20 de specii • 2 încrengături</span>
+        </div>
+        <div id="chart"></div>
+    </div>
+
+    <script>
+        const data = [{
+            type: "sunburst",
+            ids: [
+                // Phyla
+                "Ascomycota", "Mucoromycota",
+
+                // Genera
+                "Trichoderma", "Fusarium", "Aspergillus", "Penicillium", "Alternaria", "Sclerotinia", "Botrytis",
+                "Umbelopsis",
+
+                // Species
+                "T. viride", "T. virens", "T. simmonsii", "T. longibrachiatum", "T. harzianum",
+                "F. solani", "F. oxysporum", "F. moniliforme", "F. graminearum", "F. culmorum",
+                "A. tubingensis", "A. niger", "A. fumigatus",
+                "P. verrucosum", "P. expansum",
+                "A. alternata", "A. tenuissima",
+                "S. sclerotiorum",
+                "B. cinerea",
+                "U. isabellina"
+            ],
+            labels: [
+                "Ascomycota", "Mucoromycota",
+
+                "<i>Trichoderma</i>", "<i>Fusarium</i>", "<i>Aspergillus</i>", "<i>Penicillium</i>", "<i>Alternaria</i>", "<i>Sclerotinia</i>", "<i>Botrytis</i>",
+                "<i>Umbelopsis</i>",
+
+                "<i>T. viride</i>", "<i>T. virens</i>", "<i>T. simmonsii</i>", "<i>T. longibrachiatum</i>", "<i>T. harzianum</i>",
+                "<i>F. solani</i>", "<i>F. oxysporum</i>", "<i>F. moniliforme</i>", "<i>F. graminearum</i>", "<i>F. culmorum</i>",
+                "<i>A. tubingensis</i>", "<i>A. niger</i>", "<i>A. fumigatus</i>",
+                "<i>P. verrucosum</i>", "<i>P. expansum</i>",
+                "<i>A. alternata</i>", "<i>A. tenuissima</i>",
+                "<i>S. sclerotiorum</i>",
+                "<i>B. cinerea</i>",
+                "<i>U. isabellina</i>"
+            ],
+            parents: [
+                "", "",
+
+                "Ascomycota", "Ascomycota", "Ascomycota", "Ascomycota", "Ascomycota", "Ascomycota", "Ascomycota",
+                "Mucoromycota",
+
+                "Trichoderma", "Trichoderma", "Trichoderma", "Trichoderma", "Trichoderma",
+                "Fusarium", "Fusarium", "Fusarium", "Fusarium", "Fusarium",
+                "Aspergillus", "Aspergillus", "Aspergillus",
+                "Penicillium", "Penicillium",
+                "Alternaria", "Alternaria",
+                "Sclerotinia",
+                "Botrytis",
+                "Umbelopsis"
+            ],
+            values: [
+                19, 1,
+
+                5, 5, 3, 2, 2, 1, 1,
+                1,
+
+                1, 1, 1, 1, 1,
+                1, 1, 1, 1, 1,
+                1, 1, 1,
+                1, 1,
+                1, 1,
+                1,
+                1,
+                1
+            ],
+            branchvalues: "total",
+            marker: {
+                colors: [
+                    "#84c7eb", "#ca6672",
+                    // Genera
+                    "#84c7eb", "#84c7eb", "#84c7eb", "#84c7eb", "#84c7eb", "#84c7eb", "#84c7eb",
+                    "#ca6672",
+                    // Species
+                    "#add9f2", "#add9f2", "#add9f2", "#add9f2", "#add9f2",
+                    "#add9f2", "#add9f2", "#add9f2", "#add9f2", "#add9f2",
+                    "#add9f2", "#add9f2", "#add9f2",
+                    "#add9f2", "#add9f2",
+                    "#add9f2", "#add9f2",
+                    "#add9f2",
+                    "#add9f2",
+                    "#da919a"
+                ],
+                line: { width: 1.5, color: "#ffffff" }
+            },
+            textfont: { size: 12, color: "#1e293b" },
+            insidetextorientation: "radial",
+            hovertemplate: "<b>%{label}</b><br>Număr de specii: %{value}<extra></extra>"
+        }];
+
+        const layout = {
+            margin: { l: 10, r: 10, b: 10, t: 10 }
+        };
+
+        Plotly.newPlot('chart', data, layout, { responsive: true, displayModeBar: false });
+    </script>
+</body>
+</html>
